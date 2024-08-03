@@ -203,6 +203,10 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            createStars();
+        });
+
         function createStars() {
             const elements = document.querySelectorAll('.background, .overlay');
             const starCount = 100;
@@ -220,8 +224,6 @@
                 }
             });
         }
-
-        createStars();
 
         function openOverlay(contentType) {
             const overlayContent = document.getElementById('overlay-content');
