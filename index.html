@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PunkTeam</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Hide scrollbars during animation */
+        }
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('Background.gif') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+        }
+        .header {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
+            font-weight: bold;
+            background: linear-gradient(to right, red, blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background-size: 200% 100%;
+            animation: gradientAnimation 5s linear infinite;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px); /* Adjust height to leave space for the footer */
+        }
+        .buttons {
+            text-align: center;
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            gap: 20px; /* Space between buttons */
+        }
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px; /* Adjusted width */
+            height: 50px; /* Fixed height */
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(to right, red, blue);
+            background-size: 200% 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 10px;
+            
+            transition: transform 0.3s, background-color 0.3s;
+            animation: buttonGradientAnimation 5s linear infinite;
+        }
+        .button img {
+            width: 24px; /* Icon width */
+            height: 24px; /* Icon height */
+            margin-right: 10px; /* Space between icon and text */
+        }
+        .button:hover {
+            background-color: #555;
+        }
+        .button:active {
+            transform: scale(0.9); /* Slightly scale down the button on click */
+        }
+        .button:focus {
+            outline: none;
+        }
+        @keyframes buttonGradientAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('Background.gif') no-repeat center center fixed;
+            background-size: cover;
+            transform: translateX(100%);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+        }
+        .overlay.show {
+            transform: translateX(0);
+        }
+        .overlay-content {
+            padding: 20px;
+            text-align: center;
+            color: white; /* Ensure text is readable over background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        .footer img {
+            max-width: 300px;
+        }
+        .close {
+            cursor: pointer;
+            font-size: 40px;
+            font-weight: bold;
+            color: white; /* Ensure close button is visible */
+            border: none;
+            background: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="header">PunkTeam</div>
+    <div class="container">
+        <div class="buttons">
+            <a href="#" class="button download-button" onclick="openOverlay('Download')">Download</a>
+            <a href="#" class="button about-button" onclick="openOverlay('About')">About</a>
+        </div>
+    </div>
+
+    <!-- Footer with Credits Image on Main Tab -->
+    <div class="footer">
+        <img src="Credits.png" alt="Credits">
+    </div>
+
+    <!-- Full-Screen Overlay -->
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <button class="close" onclick="closeOverlay()">×</button>
+            <div id="overlay-content">Content will be loaded here.</div>
+            <div class="footer">
+                <img src="Credits.png" alt="Credits">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openOverlay(contentType) {
+            const overlayContent = document.getElementById('overlay-content');
+
+            document.getElementById('overlay').classList.add('show');
+
+            if (contentType === 'Download') {
+                overlayContent.innerHTML = `
+                    <a href="https://shorter.me/Delta_2635" class="button download-button">
+                        <img src="Delta.png" alt="Download Delta Icon">Download Delta
+                    </a>
+                    <a href="https://shorter.me/Fluxus_2635" class="button download-button">
+                        <img src="Fluxus.png" alt="Download Fluxus Icon">Download Fluxus
+                    </a>
+                    <a href="https://shorter.me/Codex_v2635" class="button download-button">
+                        <img src="Codex.png" alt="Download Codex Icon">Download Codex
+                    </a>
+                    <a href="https://shorter.me/Arceus_2635" class="button download-button">
+                        <img src="Arceus.png" alt="Download Arceus X Icon">Download Arceus
+                    </a>
+                    <a href="https://shorter.me/Evon_2635" class="button download-button">
+                        <img src="Evon.png" alt="Download Evon Icon">Download Evon
+                    </a>
+                    <a href="https://shorter.me/Cubix_v2635" class="button download-button">
+                        <img src="Cubix.png" alt="Download Cubix Icon">Download Cubix
+                    </a>
+                    <a href="https://shorter.me/VegaX_2635" class="button download-button">
+                        <img src="Vega.png" alt="Download VegaX Icon">Download Vega
+                    </a>
+                `;
+            } else if (contentType === 'About') {
+                overlayContent.innerHTML = `
+                    <div class="buttons">
+                        <a href="#" class="button" onclick="openSubOverlay('Silent')">Silent</a>
+                        <a href="#" class="button" onclick="openSubOverlay('TheKing78')">TheKing78</a>
+                    </div>
+                `;
+            } else if (contentType === 'Silent') {
+                overlayContent.innerHTML = `
+                    <div class="buttons">
+                        <a href="https://discord.gg/e2eJDBbhGK" class="button">
+                            <img src="Discord.png" alt="Discord Icon">Discord
+                        </a>
+                        <a href="https://youtube.com/@silentcaliber4335?si=qGbp0rdw3PejzlYB" class="button">
+                            <img src="YouTube.png" alt="YouTube Icon">YouTube
+                        </a>
+                    </div>
+                `;
+            } else if (contentType === 'TheKing78') {
+                overlayContent.innerHTML = `
+                    <div class="buttons">
+                        <a href="https://discord.gg/Kcz3j2mgjK" class="button">
+                            <img src="Discord.png" alt="Discord Icon">Discord
+                        </a>
+                        <a href="https://youtube.com/@hacker-king78?si=mtrGKlewIWx50gFg" class="button">
+                            <img src="YouTube.png" alt="YouTube Icon">YouTube
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        function openSubOverlay(subContentType) {
+            const overlayContent = document.getElementById('overlay-content');
+
+            if (subContentType === 'Silent') {
+                overlayContent.innerHTML = `
+                    <div class="buttons">
+                        <a href="https://discord.gg/e2eJDBbhGK" class="button">
+                            <img src="Discord.png" alt="Discord Icon">Discord
+                        </a>
+                        <a href="https://youtube.com/@silentcaliber4335?si=qGbp0rdw3PejzlYB" class="button">
+                            <img src="YouTube.png" alt="YouTube Icon">YouTube
+                        </a>
+                    </div>
+                `;
+            } else if (subContentType === 'TheKing78') {
+                overlayContent.innerHTML = `
+                    <div class="buttons">
+                        <a href="https://discord.gg/Kcz3j2mgjK" class="button">
+                            <img src="Discord.png" alt="Discord Icon">Discord
+                        </a>
+                        <a href="https://youtube.com/@hacker-king78?si=mtrGKlewIWx50gFg" class="button">
+                            <img src="YouTube.png" alt="YouTube Icon">YouTube
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        function closeOverlay() {
+            document.getElementById('overlay').classList.remove('show');
+        }
+    </script>
+</body>
+  </html>
