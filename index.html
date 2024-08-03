@@ -12,15 +12,32 @@
             font-family: Arial, sans-serif;
             overflow: hidden; /* Hide scrollbars during animation */
         }
-        .background {
+        .background, .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('Background.gif') no-repeat center center fixed;
-            background-size: cover;
+            background: black;
             z-index: -1;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            opacity: 0.8;
+            border-radius: 50%;
+            animation: moveStars 10s linear infinite;
+        }
+        @keyframes moveStars {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(100vh);
+            }
         }
         .header {
             position: absolute;
@@ -29,7 +46,7 @@
             transform: translateX(-50%);
             font-size: 60px;
             font-weight: bold;
-            background: linear-gradient(to right, red, blue);
+            background: linear-gradient(to right, red, black);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -62,7 +79,7 @@
             height: 50px; /* Fixed height */
             font-size: 18px;
             color: white;
-            background: linear-gradient(to right, red, blue);
+            background: linear-gradient(to right, red, black);
             background-size: 200% 100%;
             border: none;
             border-radius: 5px;
@@ -98,11 +115,11 @@
             right: 0;
             width: 100%;
             height: 100%;
-            background: url('Background.gif') no-repeat center center fixed;
-            background-size: cover;
+            background: black;
+            z-index: 1000;
+            overflow: hidden;
             transform: translateX(100%);
             transition: transform 0.5s ease;
-            z-index: 1000;
         }
         .overlay.show {
             transform: translateX(0);
@@ -137,15 +154,30 @@
             top: 10px;
             right: 10px;
         }
+        #copyright-popup {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: 1px solid white;
+            z-index: 2000;
+        }
     </style>
 </head>
 <body>
-    <div class="background"></div>
+    <div class="background">
+        <!-- Stars will be appended here by JavaScript -->
+    </div>
     <div class="header">PunkTeam</div>
     <div class="container">
         <div class="buttons">
             <a href="#" class="button download-button" onclick="openOverlay('Download')">Download</a>
             <a href="#" class="button about-button" onclick="openOverlay('About')">About</a>
+            <a href="#" class="button" onclick="showCopyrightPopup()">Copyright</a>
         </div>
     </div>
 
@@ -165,7 +197,32 @@
         </div>
     </div>
 
+    <!-- Copyright Popup -->
+    <div id="copyright-popup">
+        copyright [2024] [ Punk Team ]. All rights reserved. This website and its content, including but not limited to text, graphics, logos, images, and software, were created by Moew, Silent, and TheKing78. The content is the intellectual property of [ Punk Team ] and the creators. Unauthorized use or reproduction of any content is strictly prohibited without prior written permission from the copyright owners.
+    </div>
+
     <script>
+        function createStars() {
+            const elements = document.querySelectorAll('.background, .overlay');
+            const starCount = 100;
+
+            elements.forEach((element) => {
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = `${Math.random() * 100}vw`;
+                    star.style.top = `${Math.random() * 100}vh`;
+                    star.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                    star.style.opacity = Math.random();
+
+                    element.appendChild(star);
+                }
+            });
+        }
+
+        createStars();
+
         function openOverlay(contentType) {
             const overlayContent = document.getElementById('overlay-content');
 
@@ -258,6 +315,14 @@
         function closeOverlay() {
             document.getElementById('overlay').classList.remove('show');
         }
+
+        function showCopyrightPopup() {
+            const popup = document.getElementById('copyright-popup');
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 7000); // Hide popup after 7 seconds
+        }
     </script>
 </body>
-  </html>
+</html>
